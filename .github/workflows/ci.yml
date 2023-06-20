@@ -25,9 +25,9 @@ jobs:
       - name: Deploy to Development
         if: github.ref == 'refs/heads/develop'
         run: |
-          # Comandos para implantar no ambiente de desenvolvimento
+          npm test
 
       - name: Deploy to Production
         if: github.ref == 'refs/heads/master'
         run: |
-          # Comandos para implantar no ambiente de produção
+          npm test
