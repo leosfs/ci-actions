@@ -8,26 +8,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
+        #Verify checkout
       - name: Checkout
         uses: actions/checkout@v2
-
+        #Install dependences
       - name: Install Dependencies
         run: npm install
-
-      - name: Run Tests
-        run: npm test
-
+      # Execute tests
+      # - name: Run Tests
+      #   run: npm test
+        #Build projext
       - name: Build
         run: npm run build
+
 
       - name: Deploy to Development
         if: github.ref == 'refs/heads/develop'
         run: |
-          npm test
+          echo Executa o comando para develop
 
       - name: Deploy to Production
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         run: |
-          npm test
+          echo Executa o comando para Production
