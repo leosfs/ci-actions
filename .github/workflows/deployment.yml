@@ -13,12 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Build Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: false
-          tags: leosfs/teste-ci-cd:latest
+      # - name: Build Docker image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: .
+      #     push: false
+      #     tags: leosfs/teste-ci-cd:latest
 
       - name: Install Dependencies
         run: npm ci
@@ -26,19 +26,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      # - name: Build Docker image
-      #   id: build
-      #   run: |
-      #     IMAGE_TAG=$(date -u +'%Y%m%d%H%M%S')-$(git rev-parse --short HEAD)
-      #     docker build \
-      #       --platform linux/amd64 \
-      #       --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
-      #       --build-arg VCS_REF=$(git rev-parse --short HEAD) \
-      #       --tag leosfs/teste-ci-cd:${IMAGE_TAG} \
-      #       --tag leosfs/teste-ci-cd:latest \
-      #       .
-      #     echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
-      
 
   deploy-test:
 
@@ -63,7 +50,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: thetips4you/testjodejsapp
+          images: leosfs/teste-ci-cd
       
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
@@ -73,7 +60,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  
 
   deploy-production:
     needs: build-ci
