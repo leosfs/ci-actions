@@ -48,7 +48,7 @@ jobs:
           images: leosfs/teste-ci-cd
           flavor: |
             latest=true
-            suffix=-$(git show -s --date=format:'%m%d%Y' ${{ github.sha }})-$(github.sha)
+            suffix=-$(git show -s --format=%cd --date=format:'%m%d%Y' ${{ github.sha }})-${{ github.sha }}
 
       # - name: Get current date
       #   id: date
