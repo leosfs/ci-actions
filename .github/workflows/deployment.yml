@@ -48,7 +48,7 @@ jobs:
           images: leosfs/teste-ci-cd
           flavor: |
             latest=true
-            suffix=-${{ github.sha }}
+            suffix=-$(date -u +'%Y%m%d%H%M%S')-${{ github.sha }}
       
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
