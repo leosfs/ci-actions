@@ -52,7 +52,7 @@ jobs:
 
       - name: Get current date
         id: date
-        run: echo "date:$(git show -s --date=format:'%m%d%Y' --format='%cd' 19556fc ${{ steps.hash.outputs.hash }})"
+        run: echo "date:$(git show -s --date=format:'%m%d%Y' --format='%cd' ${{ steps.hash.outputs.hash }})"
       
       - name: Get short hash
         id: hash
