@@ -21,7 +21,6 @@ jobs:
 
 
   deploy:
-
     needs: build-ci
     if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-20.04
@@ -36,8 +35,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      
       - name: Get current Date and Hash HEAD
-
         run: |
           echo "DATE=$(git show -s --date=format:'%m%d%Y' --format='%cd' ${{ github.sha }})" >> $GITHUB_ENV
           echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -49,8 +48,7 @@ jobs:
           images: leosfs/teste-ci-cd
           flavor: |
             latest=true
-            suffix=-${{ env.DATE  }}-${{ env.HASH }}
-
+            suffix=-${{ env.DATE }}-${{ env.HASH }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
@@ -64,7 +62,7 @@ jobs:
   deploy-production:
     needs: build-ci
     if: github.ref == 'refs/heads/main'
-runs-on: ubuntu-20.04
+    runs-on: ubuntu-20.04
     concurrency: deploy-to-test
     
     steps:
@@ -76,8 +74,8 @@ runs-on: ubuntu-20.04
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      
       - name: Get current Date and Hash HEAD
-
         run: |
           echo "DATE=$(git show -s --date=format:'%m%d%Y' --format='%cd' ${{ github.sha }})" >> $GITHUB_ENV
           echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
@@ -89,8 +87,7 @@ runs-on: ubuntu-20.04
           images: leosfs/teste-ci-cd
           flavor: |
             latest=true
-            suffix=-${{ env.DATE  }}-${{ env.HASH }}
-
+            suffix=-${{ env.DATE }}-${{ env.HASH }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
