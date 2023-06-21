@@ -20,7 +20,7 @@ jobs:
         run: npm run build
 
 
-  deploy-test:
+  deploy:
 
     needs: build-ci
     if: github.ref == 'refs/heads/develop'
@@ -28,8 +28,6 @@ jobs:
     concurrency: deploy-to-test
     
     steps:
- 
-
       - name: Check out the repo
         uses: actions/checkout@v3
       
@@ -66,13 +64,10 @@ jobs:
   deploy-production:
     needs: build-ci
     if: github.ref == 'refs/heads/main'
-
-       runs-on: ubuntu-20.04
+runs-on: ubuntu-20.04
     concurrency: deploy-to-test
     
     steps:
- 
-
       - name: Check out the repo
         uses: actions/checkout@v3
       
@@ -104,4 +99,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-

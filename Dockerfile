@@ -9,6 +9,7 @@ RUN npm install
 
 COPY src ./src
 
+
 FROM node:latest
 
 ARG NODE_ENV
