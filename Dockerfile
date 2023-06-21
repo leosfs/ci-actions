@@ -1,5 +1,5 @@
 FROM node:16-slim as BUILDER 
-LABEL maintainer="Bruno Germano"
+LABEL maintainer="Leonaardo Henrique"
 
 WORKDIR /usr/src/app
 
@@ -9,7 +9,7 @@ RUN npm install
 
 COPY src ./src
 
-FROM node:16-alpine
+FROM node:latest
 
 ARG NODE_ENV
 
