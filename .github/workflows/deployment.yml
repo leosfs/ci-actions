@@ -57,8 +57,11 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+           tags: |
+            leosfs/teste-ci-cd:${{ steps.meta.outputs.tags }}
+            leosfs/teste-ci-cd:latest
           labels: ${{ steps.meta.outputs.labels }}
+
 
 
   deploy-production:
