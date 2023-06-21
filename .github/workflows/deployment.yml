@@ -43,8 +43,8 @@ jobs:
       - name: Get current date
         # id: date
         run: |
-        echo "DATE=$(git show -s --date=format:'%m%d%Y' --format='%cd' ${{ github.sha }})" >> $GITHUB_ENV
-        echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "DATE=$(git show -s --date=format:'%m%d%Y' --format='%cd' ${{ github.sha }})" >> $GITHUB_ENV
+          echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
