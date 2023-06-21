@@ -1,4 +1,3 @@
-
 name: Deploy
 
 on:
@@ -7,47 +6,26 @@ on:
     branches: [main, develop]
 
 jobs:
-  # test-ci:
-  #   runs-on: ubuntu-20.04
-
-  #   strategy:
-  #     matrix:
-  #       node-version: [14.x, 16.x]
-    
-
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v2
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #   - run: npm ci
-  #   - run: npm run test
-
-   build-ci:
+  build-ci:
     # needs: test
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Build Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: false
-        tags: leosfs/teste-ci-cd:latest
-
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
-        
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false
+          tags: leosfs/teste-ci-cd:latest
+
       - name: Install Dependencies
         run: npm ci
 
       - name: Build
         run: npm run build
-
 
   deploy-test:
     # needs: test-ci
@@ -58,19 +36,19 @@ jobs:
     environment: test
     
     steps:
-     - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Deploy to production
-      uses: appleboy/ssh-action@master
+      - name: Deploy to production
+        uses: appleboy/ssh-action@master
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    - name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker image
@@ -88,9 +66,7 @@ jobs:
           docker push leosfs/teste-ci-cd:$(date -u +'%Y%m%d%H%M%S')-$(git rev-parse --short HEAD)
           docker push leosfs/teste-ci-cd:latest
 
-
   deploy-production:
-
     needs: build-ci
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-20.04
@@ -98,9 +74,11 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v2
+
       - name: Use Node.js latest
         uses: actions/setup-node@v2
         with:
           node-version: latest
+
       - run: docker build -t setup-nodejs .
       - run: echo "Deploy"
