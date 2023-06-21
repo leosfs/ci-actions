@@ -40,7 +40,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
+      - name: Get current date
+        # id: date
+        run: |
+        echo "DATE=$(git show -s --date=format:'%m%d%Y' --format='%cd' ${{ github.sha }})" >> $GITHUB_ENV
+        echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
@@ -50,13 +55,10 @@ jobs:
             latest=true
             suffix=-${{ env.DATE  }}-${{ env.HASH }}
 
-      - name: Get current date
-        id: date
-        run: echo "DATE=$(git show -s --date=format:'%m%d%Y' --format='%cd' ${{ env.HASH }})" >> $GITHUB_ENV
-      
-      - name: Get short hash
-        id: hash
-        run: echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+   
+      # - name: Get short hash
+      #   id: hash
+      #   run: echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
