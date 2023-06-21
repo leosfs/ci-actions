@@ -26,6 +26,18 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Build Docker image
+        id: build
+        run: |
+          IMAGE_TAG=$(date -u +'%Y%m%d%H%M%S')-$(git rev-parse --short HEAD)
+          docker buildx build \
+            --platform linux/amd64 \
+            --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
+            --build-arg VCS_REF=$(git rev-parse --short HEAD) \
+            --tag leosfs/teste-ci-cd:${IMAGE_TAG} \
+            --tag leosfs/teste-ci-cd:latest \
+            .
+          echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
       
 
   deploy-test:
@@ -51,19 +63,11 @@ jobs:
       # - name: Set up Docker Buildx
       #   uses: docker/setup-buildx-action@v1
 
-      - name: Build Docker image
-        run: |
-          docker build \
-            --platform linux/amd64 \
-            --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
-            --build-arg VCS_REF=$(git rev-parse --short HEAD) \
-            --tag leosfs/teste-ci-cd:$(date -u +'%Y%m%d%H%M%S')-$(git rev-parse --short HEAD) \
-            --tag leosfs/teste-ci-cd:latest \
-            .
-
+    
       - name: Push Docker image
         run: |
-          docker push leosfs/teste-ci-cd:$(date -u +'%Y%m%d%H%M%S')-$(git rev-parse --short HEAD)
+          IMAGE_TAG=${{ needs.build-ci.outputs.IMAGE_TAG }}
+          docker push leosfs/teste-ci-cd:${IMAGE_TAG}
           docker push leosfs/teste-ci-cd:latest
 
   deploy-production:
