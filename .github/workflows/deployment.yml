@@ -48,15 +48,15 @@ jobs:
           images: leosfs/teste-ci-cd
           flavor: |
             latest=true
-            suffix=-$(git show -s --format=%cd --date=format:'%m%d%Y' ${{ github.sha }})-${{ github.sha }}
+            suffix=-${{ steps.date.outputs.date }}-${{ steps.hash.outputs.hash }}
 
-      # - name: Get current date
-      #   id: date
-      #   run: echo "name=date::$(git show -s --date=format:'%m%d%Y' ${{ steps.hash.outputs.hash }})"
+      - name: Get current date
+        id: date
+        run: echo "name=date::$(git show -s --date=format:'%m%d%Y' ${{ steps.hash.outputs.hash }})"
       
-      # - name: Get short hash
-      #   id: hash
-      #   run: echo "name=hash::$(git rev-parse --short HEAD)"
+      - name: Get short hash
+        id: hash
+        run: echo "name=hash::$(git rev-parse --short HEAD)"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
