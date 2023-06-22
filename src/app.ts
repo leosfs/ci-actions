@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/ci", (req, res) => {
-    res.json({message:true, espCode:"42"})
+    res.json({message:true, espCode:"42-42"})
 })
 
 export { app };
