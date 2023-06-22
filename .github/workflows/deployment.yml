@@ -20,7 +20,7 @@ jobs:
         run: npm run build
 
 
-  deploy:
+  deploy-develop:
     needs: build-ci
     if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-20.04
@@ -96,3 +96,13 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
+  webhook-update-image-production:
+    needs:  deploy-production
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-20.04
+    concurrency: webhook-upadate-image
+      steps:
+      - name: Call Webhook
+        run: |
+          curl -X GET -H "Content-Type: application/json" -d '{}' https://dummyjson.com/products
