@@ -1,5 +1,5 @@
 # .github/workflows/pipeline.yml
-name: Pipeline
+name: Notification
 
 on:
   pull_request:
@@ -17,4 +17,3 @@ jobs:
       - name: Send Message
         run: |
           curl -X GET -H "Content-Type: application/json" -d '{}' https://dummyjson.com/products
-          
