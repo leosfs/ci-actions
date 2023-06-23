@@ -1,0 +1,20 @@
+# .github/workflows/pipeline.yml
+name: Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Send Message
+        run: |
+          curl -X GET -H "Content-Type: application/json" -d '{}' https://dummyjson.com/products
+          
