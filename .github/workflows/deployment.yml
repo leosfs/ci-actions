@@ -101,7 +101,7 @@ jobs:
     steps:
       - name: Call Webhook
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '{}' https://webhook-deploy.onrender.com/api/webhook
+          curl -X GET -H "Content-Type: application/json" -d '{}' https://dummyjson.com/products
 
   webhook-update-image-develop:
     needs: deploy-develop
@@ -111,4 +111,4 @@ jobs:
     steps:
       - name: Call Webhook
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '{}' https://webhook-deploy.onrender.com/api/webhook
+          curl -X GET -H "Content-Type: application/json" -d '{}' https://dummyjson.com/products
