@@ -100,8 +100,8 @@ jobs:
 
     steps:
       - name: Get current Date and Hash HEAD
-          run: |
-            echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        run: |
+          echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Call Webhook
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
@@ -117,8 +117,8 @@ jobs:
 
     steps:
       - name: Get current Date and Hash HEAD
-          run: |
-            echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        run: |
+          echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Call Webhook
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
