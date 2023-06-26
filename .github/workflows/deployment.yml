@@ -104,7 +104,8 @@ jobs:
           curl -X POST -H "Content-Type: application/json" -d '{
             "environment": "${{ github.ref }}",
             "commit": "${{ github.sha }}",
-            "author": "${{ github.actor }}"
+            "author": "${{ github.actor }}", 
+            "project":"${{ env.GITHUB_REPOSITORY }}"
           }' https://webhook-api-sikx.onrender.com/api/webhook
 
   webhook-update-image-develop:
@@ -118,5 +119,6 @@ jobs:
           curl -X POST -H "Content-Type: application/json" -d '{
             "environment": "${{ github.ref }}",
             "commit": "${{ github.sha }}",
-            "author": "${{ github.actor }}"
+            "author": "${{ github.actor }}", 
+            "project":"${{ env.GITHUB_REPOSITORY }}"
           }' https://webhook-api-sikx.onrender.com/api/webhook
