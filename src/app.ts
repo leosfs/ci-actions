@@ -7,7 +7,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
 
-figlet("SFS-Memory -><-", function (err, data) {
+figlet("SFS-Memory -><-", function (err: any, data: any) {
     if (err) {
       console.log("Something went wrong...");
       console.dir(err);
