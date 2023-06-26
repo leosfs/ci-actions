@@ -101,7 +101,11 @@ jobs:
     steps:
       - name: Call Webhook
         run: |
-          curl -X GET -H "Content-Type: application/json" -d '{}' https://dummyjson.com/products
+          curl -X POST -H "Content-Type: application/json" -d '{
+            "environment": "${{ github.ref }}",
+            "commit": "${{ github.sha }}",
+            "author": "${{ github.actor }}"
+          }' https://webhook-api-sikx.onrender.com/api/webhook
 
   webhook-update-image-develop:
     needs: deploy-develop
@@ -111,4 +115,8 @@ jobs:
     steps:
       - name: Call Webhook
         run: |
-          curl -X GET -H "Content-Type: application/json" -d '{}' https://dummyjson.com/products
+          curl -X POST -H "Content-Type: application/json" -d '{
+            "environment": "${{ github.ref }}",
+            "commit": "${{ github.sha }}",
+            "author": "${{ github.actor }}"
+          }' https://webhook-api-sikx.onrender.com/api/webhook
