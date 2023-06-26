@@ -106,7 +106,7 @@ jobs:
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
             "environment": "${{ github.ref }}",
-            "commit": "${{ emv.HASH }}",
+            "commit": "${{ env.HASH }}",
             "author": "${{ github.actor }}"
           }' https://webhook-api-sikx.onrender.com/api/webhook
 
