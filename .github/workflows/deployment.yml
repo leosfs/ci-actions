@@ -99,14 +99,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get current Date and Hash HEAD
-        run: |
-          echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Call Webhook
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
             "environment": "${{ github.ref }}",
-            "commit": "${{ env.HASH }}",
+            "commit": "${{ github.sha }}",
             "author": "${{ github.actor }}"
           }' https://webhook-api-sikx.onrender.com/api/webhook
 
@@ -116,13 +113,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get current Date and Hash HEAD
-        run: |
-          echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Call Webhook
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
             "environment": "${{ github.ref }}",
-            "commit": "${{ env.HASH }}",
+            "commit": "${{ github.sha }}",
             "author": "${{ github.actor }}"
           }' https://webhook-api-sikx.onrender.com/api/webhook
