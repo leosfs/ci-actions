@@ -99,9 +99,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-     - name: Get current Date and Hash HEAD
-        run: |
-          echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: Get current Date and Hash HEAD
+          run: |
+            echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Call Webhook
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
@@ -116,8 +116,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-        run: |
-          echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: Get current Date and Hash HEAD
+          run: |
+            echo "HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Call Webhook
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
