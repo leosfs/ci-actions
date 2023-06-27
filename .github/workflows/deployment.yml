@@ -99,13 +99,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get Name Project
+        run: |
+          echo "Nome do Projeto: ${{ env.GITHUB_REPOSITORY }}"
+          nome_projeto=$(echo "${{ env.GITHUB_REPOSITORY }}" | awk -F/ '{print $2}')
+          echo "Nome do Projeto extraído: $nome_projeto"
       - name: Call Webhook
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
             "environment": "${{ github.ref }}",
             "commit": "${{ github.sha }}",
             "author": "${{ github.actor }}", 
-            "project":"${{ env.GITHUB_REPOSITORY }}"
+            "project":"${{ $nome_projeto }}"
           }' https://webhook-api-sikx.onrender.com/api/webhook
 
   webhook-update-image-develop:
@@ -114,11 +119,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get Name Project
+        run: |
+          echo "Nome do Projeto: ${{ env.GITHUB_REPOSITORY }}"
+          nome_projeto=$(echo "${{ env.GITHUB_REPOSITORY }}" | awk -F/ '{print $2}')
+          echo "Nome do Projeto extraído: $nome_projeto"
       - name: Call Webhook
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
             "environment": "${{ github.ref }}",
             "commit": "${{ github.sha }}",
             "author": "${{ github.actor }}", 
-            "project":"${{ env.GITHUB_REPOSITORY }}"
+            "project":"${{ $nome_projeto }}"
           }' https://webhook-api-sikx.onrender.com/api/webhook
