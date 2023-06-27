@@ -16,6 +16,7 @@ figlet("SFS-Memory -><-", function (err: any, data: any) {
     
     console.log(data);
     res.json({message:"SFS-Memory --><--"});
+    
   });
 
 })
