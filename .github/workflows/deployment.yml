@@ -106,7 +106,8 @@ jobs:
             "environment": "${{ github.ref }}",
             "commit": "${{ github.sha }}",
             "author": "${{ github.actor }}", 
-            "project":"ci-actions"
+            "project":"ci-actions",
+            "commands":["echo 'teste222'", "echo 'teste2333'"]
           }' https://webhook-api-sikx.onrender.com/api/webhook
 
   webhook-update-image-develop:
@@ -121,5 +122,6 @@ jobs:
             "environment": "${{ github.ref }}",
             "commit": "${{ github.sha }}",
             "author": "${{ github.actor }}", 
-            "project":"ci-actions"
+            "project":"ci-actions", 
+            "commands":["echo 'teste222'", "echo 'teste2333'"]
           }' https://webhook-api-sikx.onrender.com/api/webhook
